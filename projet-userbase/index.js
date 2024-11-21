@@ -232,20 +232,23 @@ console.log(
 /*Pour chacune des couleurs d'yeux, compter le nombre d'utilisateurs actifs et inactifs*/
 
 function countUsersByEyeColor(users) {
-  return users.reduce(
-    (acc, user) => ({
-      ...acc,
-      [user.eyeColor]: {
-        active: acc[user.eyeColor].active + (user.isActive ? 1 : 0),
-        inactive: acc[user.eyeColor].inactive + (user.isActive ? 0 : 1),
+  const eyeColors = {
+    blue: { active: 0, inactive: 0 },
+    green: { active: 0, inactive: 0 },
+    brown: { active: 0, inactive: 0 },
+  };
+
+  return users.reduce((counts, user) => {
+    const { eyeColor, isActive } = user;
+
+    return {
+      ...counts,
+      [eyeColor]: {
+        active: counts[eyeColor].active + (isActive ? 1 : 0),
+        inactive: counts[eyeColor].inactive + (isActive ? 0 : 1),
       },
-    }),
-    {
-      blue: { active: 0, inactive: 0 },
-      green: { active: 0, inactive: 0 },
-      brown: { active: 0, inactive: 0 },
-    }
-  );
+    };
+  }, eyeColors);
 }
 
 console.log(
